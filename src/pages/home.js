@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Search from "./search/search";
 
 class Home extends React.Component {
 
@@ -122,14 +123,7 @@ class Home extends React.Component {
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-xs-9">
-                                        <div class="search-area">
-                                            <div class="search-box-inner">
-                                                <form action="#">
-                                                    <input type="text" placeholder="Search"/>
-                                                        <button type="submit"><i class="fa fa-search"></i></button>
-                                                </form>
-                                            </div>
-                                        </div>
+                                        <Search></Search>
                                     </div>
                                 </div>
                             </div>

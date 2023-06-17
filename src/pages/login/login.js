@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs';
 import { Link } from "react-router-dom";
+import Search from "../search/search";
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -135,14 +136,7 @@ const Login = () => {
                                         </div>
                                     </div>
                                     <div className="col-md-3 col-sm-6 col-xs-9">
-                                        <div className="search-area">
-                                            <div className="search-box-inner">
-                                                <form action="#">
-                                                    <input type="text" placeholder="Search"/>
-                                                    <button type="submit"><i className="fa fa-search"></i></button>
-                                                </form>
-                                            </div>
-                                        </div>
+                                       <Search></Search>
                                     </div>
                                 </div>
                             </div>

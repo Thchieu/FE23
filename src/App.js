@@ -5,6 +5,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
+import ProductList from "./pages/search/products";
 
 function App() {
   return (
@@ -13,8 +14,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+            <Route path="/products" element={<ProductList />} />
         </Routes>
-
       </Router>
   );
 }
