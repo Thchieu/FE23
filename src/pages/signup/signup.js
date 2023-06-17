@@ -1,50 +1,47 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
-const Login = () => {
-    const [username, setUsername] = useState('');
+const Signup = () => {
+
+    const [fullName, setFullName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const [address, setAddress] = useState('');
+    const [phoneNum, setPhoneNum] = useState('');
 
-    const handleLogin = async (e) => {
+
+    const handleSignup = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.get('https://648c5d0a8620b8bae7ecc57b.mockapi.io/api/user');
+            const hashedPassword = await bcrypt.hash(password, 10);
 
-            const users = response.data;
+            const response = await axios.post('https://648c5d0a8620b8bae7ecc57b.mockapi.io/api/user', {
+                fullName,
+                email,
+                password: hashedPassword,
+                address,
+                phoneNum
+            });
+            alert('Đăng kí thành công');
+            console.log('Đăng kí thành công:', response.data);
+            // Thực hiện các xử lý khác sau khi đăng kí thành công
 
-            // Kiểm tra thông tin đăng nhập
-            const user = users.find((user) => user.email === username);
-
-            if (user) {
-                // So sánh mật khẩu đã mã hóa
-                const passwordMatch = await bcrypt.compare(password, user.password);
-
-                if (passwordMatch) {
-                    // Đăng nhập thành công
-                    console.log('Đăng nhập thành công');
-                    localStorage.setItem('isLoggedIn', true);
-                    navigate('/');
-                } else {
-                    // Đăng nhập thất bại
-                   alert('Thông tin đăng nhập không chính xác. Vui lòng kiểm tra lại.');
-                }
-            } else {
-                // Đăng nhập thất bại
-                alert('Thông tin đăng nhập không chính xác. Vui lòng kiểm tra lại.');
-            }
+            // Reset trạng thái
+            setFullName('');
+            setEmail('');
+            setPassword('');
+            setAddress('');
+            setPhoneNum('');
         } catch (error) {
-            console.error('Lỗi đăng nhập:', error);
-            setError('Đăng nhập thất bại. Vui lòng thử lại sau.');
+            console.error('Lỗi đăng kí:', error);
+            // Xử lý lỗi đăng kí
         }
     };
 
+    const { isLoggedIn } = localStorage.getItem('isLoggedIn') === 'true';
     return (
         <div>
 
@@ -52,6 +49,20 @@ const Login = () => {
                 <div className="header-top">
                     <div className="container">
                         <div className="row">
+                            <div className="col-md-6 col-sm-8 col-xs-12"></div>
+                            <div class="col-md-6 col-sm-8 col-xs-12">
+                                <div class="top-bar-menu">
+                                    <ul>
+                                        <li>{isLoggedIn  ? (
+                                            <Link to="/" onClick={this.handleLogout}>
+                                                Logout
+                                            </Link>
+                                        ) : (
+                                            <Link to="/login">Login</Link>
+                                        )}</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,7 +169,7 @@ const Login = () => {
                             <ul>
                                 <li><a>Home</a> <span><i className="fa fa-angle-right"></i></span>
                                 </li>
-                                <li> Login</li>
+                                <li>SignUp</li>
                             </ul>
                         </div>
                     </div>
@@ -169,56 +180,81 @@ const Login = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-12 col-md-12 col-xs-12">
-                            <div className="customer-login my-account">
-                                <form method="post" className="login" onSubmit={handleLogin}>
+                            <div className="customer-register my-account">
+                                <form method="post" className="register" onSubmit={handleSignup}>
                                     <div className="form-fields">
-                                        <h2>Login</h2>
+                                        <h2>Register</h2>
                                         <p className="form-row form-row-wide">
-                                            <label htmlFor="username">Username or email address <span className="required">*</span></label>
+                                            <label htmlFor="reg_fullname">Full Name <span className="required">*</span></label>
                                             <input
                                                 type="text"
                                                 className="input-text"
-                                                name="username"
-                                                id="username"
-                                                value={username}
-                                                onChange={(e) => setUsername(e.target.value)}
+                                                name="fullName"
+                                                id="reg_fullname"
+                                                value={fullName}
+                                                onChange={(e) => setFullName(e.target.value)}
+                                                required
                                             />
                                         </p>
                                         <p className="form-row form-row-wide">
-                                            <label htmlFor="password">Password <span className="required">*</span></label>
+                                            <label htmlFor="reg_email">Email address <span className="required">*</span></label>
                                             <input
+                                                type="email"
                                                 className="input-text"
-                                                type="password"
-                                                name="password"
-                                                id="password"
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
+                                                name="email"
+                                                id="reg_email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                required
                                             />
                                         </p>
+                                        <p className="form-row form-row-wide">
+                                            <label htmlFor="reg_password">Password <span className="required">*</span></label>
+                                            <input
+                                                type="password"
+                                                className="input-text"
+                                                name="password"
+                                                id="reg_password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                required
+                                            />
+                                        </p>
+                                        <p className="form-row form-row-wide">
+                                            <label htmlFor="reg_address">Address <span className="required">*</span></label>
+                                            <input
+                                                type="text"
+                                                className="input-text"
+                                                name="address"
+                                                id="reg_address"
+                                                value={address}
+                                                onChange={(e) => setAddress(e.target.value)}
+                                                required
+                                            />
+                                        </p>
+                                        <p className="form-row form-row-wide">
+                                            <label htmlFor="reg_phone">Phone Number <span className="required">*</span></label>
+                                            <input
+                                                type="text"
+                                                className="input-text"
+                                                name="phoneNum"
+                                                id="reg_phone"
+                                                value={phoneNum}
+                                                onChange={(e) => setPhoneNum(e.target.value)}
+                                                required
+                                            />
+                                        </p>
+                                        <div style={{ left: '-999em', position: 'absolute' }}>
+                                            <label htmlFor="trap">Anti-spam</label>
+                                            <input type="text" name="email_2" id="trap" tabIndex="-1" />
+                                        </div>
                                     </div>
                                     <div className="form-action">
-                                        <p className="lost_password">
-                                            <a>Lost your password?</a>
-                                        </p>
-                                        <p className="lost_password" style={{ marginLeft: '30px' }}>
-                                           <Link to="/signup">Register!</Link>
-                                        </p>
                                         <div className="actions-log">
-                                            <input type="submit" className="button" name="login" value="Login" />
+                                            <input type="submit" className="button" name="register" value="Register" />
                                         </div>
-                                        <label htmlFor="rememberme" className="inline">
-                                            <input
-                                                name="rememberme"
-                                                type="checkbox"
-                                                id="rememberme"
-                                                value={rememberMe}
-                                                onChange={(e) => setRememberMe(e.target.checked)}
-                                            />{' '}
-                                            Remember me
-                                        </label>
                                     </div>
                                 </form>
-                                {error && <p>{error}</p>}
                             </div>
                         </div>
                     </div>
@@ -292,4 +328,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;
