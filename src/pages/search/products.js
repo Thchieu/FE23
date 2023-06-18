@@ -162,6 +162,9 @@ const ProductList = () => {
                             </div>
                             <div className="row">
                                 <div className="tab-content">
+                                    {products.length === 0 && (
+                                        <p>Không tìm thấy sản phẩm phù hợp.</p>
+                                    )}
                                     <div role="tabpanel" className="tab-pane active" id="grid-view">
                                         {products.map((product) => (
                                             <div className="col-md-4 col-sm-6 col-xs-12" key={product.id}>
