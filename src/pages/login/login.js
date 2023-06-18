@@ -16,26 +16,15 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.get('https://648c5d0a8620b8bae7ecc57b.mockapi.io/api/user');
-
-            const users = response.data;
+            const response = await axios.get('https://648c5d0a8620b8bae7ecc57b.mockapi.io/api/user?email=' + username);
+            const user = response.data;
 
             // Kiểm tra thông tin đăng nhập
-            const user = users.find((user) => user.email === username);
-
-            if (user) {
-                // So sánh mật khẩu đã mã hóa
-                const passwordMatch = await bcrypt.compare(password, user.password);
-
-                if (passwordMatch) {
-                    // Đăng nhập thành công
-                    console.log('Đăng nhập thành công');
-                    localStorage.setItem('isLoggedIn', true);
-                    navigate('/');
-                } else {
-                    // Đăng nhập thất bại
-                   alert('Thông tin đăng nhập không chính xác. Vui lòng kiểm tra lại.');
-                }
+            if (user && await bcrypt.compare(password, user[0].password)) {
+                // Đăng nhập thành công
+                console.log('Đăng nhập thành công');
+                localStorage.setItem('isLoggedIn', true);
+                navigate('/');
             } else {
                 // Đăng nhập thất bại
                 alert('Thông tin đăng nhập không chính xác. Vui lòng kiểm tra lại.');

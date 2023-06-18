@@ -17,8 +17,16 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-            const hashedPassword = await bcrypt.hash(password, 10);
 
+            const checkEmailResponse = await axios.get(`https://648c5d0a8620b8bae7ecc57b.mockapi.io/api/user?email=${email}`);
+            const existingUser = checkEmailResponse.data;
+
+            if (existingUser.length > 0) {
+                alert('Email đã tồn tại. Vui lòng chọn email khác.');
+                return;
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
             const response = await axios.post('https://648c5d0a8620b8bae7ecc57b.mockapi.io/api/user', {
                 fullName,
                 email,

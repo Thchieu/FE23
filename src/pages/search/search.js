@@ -16,19 +16,15 @@ const Search = () => {
         setLoading(true);
 
         try {
-            const response = await axios.get('https://648c3bc98620b8bae7ec83c4.mockapi.io/api/products');
+            const response = await axios.get('https://648c3bc98620b8bae7ec83c4.mockapi.io/api/products?name=' + keyword);
             const data = response.data;
-
-            // Lọc danh sách sản phẩm phù hợp với từ khóa
-            const filteredProducts = data.filter((product) =>
-                product.name.toLowerCase().includes(keyword.toLowerCase())
-            );
+            console.log(data)
 
             // Xóa các sản phẩm trong local storage
             localStorage.removeItem('products');
 
             // Lưu danh sách sản phẩm mới vào local storage
-            localStorage.setItem('products', JSON.stringify(filteredProducts));
+            localStorage.setItem('products', JSON.stringify(data));
             navigate("/products");
         } catch (error) {
             setError('Đã xảy ra lỗi khi tìm kiếm sản phẩm.');
