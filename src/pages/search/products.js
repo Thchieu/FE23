@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
+    const [sortOption, setSortOption] = useState('Default');
     const location = useLocation();
 
     useEffect(() => {
@@ -12,6 +13,20 @@ const ProductList = () => {
         const storedProducts = JSON.parse(localStorage.getItem('products')) || [];
         setProducts(storedProducts);
     }, [location]);
+
+    useEffect(() => {
+        // Thực hiện sắp xếp danh sách sản phẩm dựa trên giá trị lựa chọn
+        let sortedProducts = [...products];
+
+        if (sortOption === 'PriceLow') {
+            sortedProducts.sort((a, b) => a.price - b.price);
+        } else if (sortOption === 'PriceHigh') {
+            sortedProducts.sort((a, b) => b.price - a.price);
+        }
+        // Cập nhật danh sách sản phẩm đã được sắp xếp
+        setProducts(sortedProducts);
+    }, [sortOption]);
+
 
     return (
         <div>
@@ -121,13 +136,10 @@ const ProductList = () => {
                                     <p className="filter-title">sort by: </p>
                                     <div className="filter-form">
                                         <form action="#">
-                                            <select>
+                                            <select value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
                                                 <option value="Default">Default</option>
-                                                <option value="Newest">Newest items</option>
-                                                <option value="Trending">Trending items</option>
-                                                <option value="Best">Best sellers</option>
                                                 <option value="PriceLow">Price: low to high</option>
-                                                <option value="PriceHigh">Price: high to high</option>
+                                                <option value="PriceHigh">Price: high to low</option>
                                             </select>
                                         </form>
                                     </div>
