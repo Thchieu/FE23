@@ -3,14 +3,25 @@ import { Link } from "react-router-dom";
 import Search from "./search/search";
 import Header from "./Header";
 import Footer from "./Footer";
+import axios from "axios";
 
 class Home extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            product: [],
             isLoggedIn: localStorage.getItem('isLoggedIn') === 'true'
         };
+    }
+    componentDidMount() {
+        axios.get('https://648c3bc98620b8bae7ec83c4.mockapi.io/api/products')
+            .then(response => {
+                this.setState({ product: response.data });
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     handleLogout = () => {
@@ -20,36 +31,19 @@ class Home extends React.Component {
 
 
     render() {
+        // Khai báo biến products và gán cho nó mảng sản phẩm từ API trả về
+        const product = this.state.product;
         const { isLoggedIn } = this.state;
         return(
         <div>
 
           <Header></Header>
 
+
             <div className="slider-container overlay">
-                <div id="mainSlider" className="nivoSlider slider-image">
-                    <img src="img/slider/slider-1.jpg" alt="" title="#htmlcaption1"/>
-                </div>
-                <div id="htmlcaption1" className="nivo-html-caption slider-caption-1">
-                    <div className="container ">
-                        <div className="row">
-                            <div className="col-md-12 col-sm-12 col-xs-12">
-                                <div className="slide1-text">
-                                    <div className="middle-text">
-                                        <div className="title-1 wow fadeInUp" data-wow-duration="1.4s"
-                                             data-wow-delay="0.3s">
-                                            <h1>New <br/> Collection</h1>
-                                        </div>
-                                        <div className="shop-now wow bounceInUp" data-wow-duration="1.3s"
-                                             data-wow-delay=".5s">
-                                            <a href="shop.html">Shop Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                <img src="img/slider/DOTbike.png" alt="" title="#htmlcaption2" />
+
             </div>
 
             <div className="benner-area section-pedding">
@@ -63,24 +57,26 @@ class Home extends React.Component {
                     </div>
                     <div className="row">
                         <div className="banner-list">
-                            <div className="col-md-6">
-                                <div className="sigle-banner">
-                                    <div className="banner-desc">
-                                        <div className="price"><p>$320.00</p></div>
-                                        <div className="benner-heding">
-                                            <h3>Ride Bike</h3>
-                                            <p>Sed ut perspiciatis unde omnis iste <br/> natus error sit voluptatem
-                                                accusan.</p>
+                            {product.slice(10, 14).map(product => (
+                                <div className="col-md-6" key={product.id}>
+                                    <div className="sigle-banner">
+                                        <div className="banner-desc">
+                                            <div className="price"><p>{product.price}đ</p></div>
+                                            <div className="benner-heding">
+                                                <h3>{product.name}</h3>
+                                                <p>{product.description}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="banner-img">
-                                        <img src="img/banner/banner1.png" alt=""/>
-                                        <div className="view-details">
-                                            <a href="single-product.html">View Details</a>
+                                        <div className="banner-img">
+                                            <img src = {product.image} alt ={product.name}/>
+                                            <div className="view-details">
+                                                <Link to={`/product/${product.id}`}>Xem chi tiết</Link>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            ))}
+
                         </div>
                     </div>
                 </div>
@@ -91,175 +87,21 @@ class Home extends React.Component {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="section-title gray text-center">
-                                <h2>New Products</h2>
+                                <h2>Sản Phẩm Mới</h2>
                             </div>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-3 col-sm-4 col-xs-12">
-                            <div className="single-product text-center">
-                                <span className="price">off <br/>30%</span>
-                                <div className="single-product-inner">
-                                    <div className="product-img">
-                                        <a href="single-product.html"><img src="img/product/1.png" alt=""/></a>
-                                    </div>
-                                    <div className="product-details">
-                                        <h3><a href="single-product.html">Dot Bike Classic-MR866</a></h3>
-                                        <div className="revew">
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star-o"></i></a>
-                                        </div>
-                                        <div className="price-box">
-                                            <div className="old-price"><span>$300.00</span></div>
-                                            <div className="new-price"><span>$210.00</span></div>
-                                        </div>
-                                    </div>
-                                    <div className="product-hover">
-                                        <ul>
-                                            <li><a href="#" className="add-to-cart">Add to cart</a></li>
-                                            <li><a title="Add to Wishlist" href="#" className="add-to-cart"><i
-                                                className="fa fa-check-square-o"></i></a></li>
-                                            <li><a title="Add to compare" href="#" className="add-to-cart"><i
-                                                className="fa fa-signal"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3 col-sm-4 col-xs-12">
-                            <div className="single-product text-center">
-                                <span className="price">off <br/>20%</span>
-                                <div className="single-product-inner">
-                                    <div className="product-img">
-                                        <a href="single-product.html"><img src="img/product/2.png" alt=""/></a>
-                                    </div>
-                                    <div className="product-details">
-                                        <h3><a href="single-product.html">Dot Bike Express-MR868</a></h3>
-                                        <div className="revew">
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star-o"></i></a>
-                                        </div>
-                                        <div className="price-box">
-                                            <div className="old-price"><span>$300.00</span></div>
-                                            <div className="new-price"><span>$260.00</span></div>
-                                        </div>
-                                    </div>
-                                    <div className="product-hover">
-                                        <ul>
-                                            <li><a href="#" className="add-to-cart">Add to cart</a></li>
-                                            <li><a title="Add to Wishlist" href="#" className="add-to-cart"><i
-                                                className="fa fa-check-square-o"></i></a></li>
-                                            <li><a title="Add to compare" href="#" className="add-to-cart"><i
-                                                className="fa fa-signal"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3 col-sm-4 col-xs-12">
-                            <div className="single-product text-center">
-                                <span className="price">off <br/>50%</span>
-                                <div className="single-product-inner">
-                                    <div className="product-img">
-                                        <a href="single-product.html"><img src="img/product/3.png" alt=""/></a>
-                                    </div>
-                                    <div className="product-details">
-                                        <h3><a href="single-product.html">Dot Bike Ladies-MR8O8</a></h3>
-                                        <div className="revew">
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star-o"></i></a>
-                                        </div>
-                                        <div className="price-box">
-                                            <div className="old-price"><span>$400.00</span></div>
-                                            <div className="new-price"><span>$200.00</span></div>
-                                        </div>
-                                    </div>
-                                    <div className="product-hover">
-                                        <ul>
-                                            <li><a href="#" className="add-to-cart">Add to cart</a></li>
-                                            <li><a title="Add to Wishlist" href="#" className="add-to-cart"><i
-                                                className="fa fa-check-square-o"></i></a></li>
-                                            <li><a title="Add to compare" href="#" className="add-to-cart"><i
-                                                className="fa fa-signal"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3 col-sm-4 col-xs-12">
-                            <div className="single-product text-center">
-                                <span className="price">off <br/>70%</span>
-                                <div className="single-product-inner">
-                                    <div className="product-img">
-                                        <a href="single-product.html"><img src="img/product/4.png" alt=""/></a>
-                                    </div>
-                                    <div className="product-details">
-                                        <h3><a href="single-product.html">Dot Bike Classic-MR866</a></h3>
-                                        <div className="revew">
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star"></i></a>
-                                            <a href="#"><i className="fa fa-star-o"></i></a>
-                                        </div>
-                                        <div className="price-box">
-                                            <div className="old-price"><span>$500.00</span></div>
-                                            <div className="new-price"><span>$150.00</span></div>
-                                        </div>
-                                    </div>
-                                    <div className="product-hover">
-                                        <ul>
-                                            <li><a href="#" className="add-to-cart">Add to cart</a></li>
-                                            <li><a title="Add to Wishlist" href="#" className="add-to-cart"><i
-                                                className="fa fa-check-square-o"></i></a></li>
-                                            <li><a title="Add to compare" href="#" className="add-to-cart"><i
-                                                className="fa fa-signal"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="all-product text-center">
-                                <a href="shop.html">See All Product</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="accessories-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="section-title text-center">
-                                <h2>Accessories</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="accessories-list">
-                            <div className="col-md-4">
+                        {product.slice(0, 8).map(product => (
+                            <div className="col-md-3 col-sm-4 col-xs-12 " key={product.id}>
                                 <div className="single-product text-center">
-                                    <span className="new">New</span>
-                                    <span className="price">off <br/>35%</span>
+
                                     <div className="single-product-inner">
-                                        <div className="product-img">
-                                            <img src="img/product/acc1.png" alt=""/>
+                                        <div className="product-img"><Link to={`/product/${product.id}`}>
+                                            <a href="single-product.html"><img src={product.image} alt={product.name}/></a></Link>
                                         </div>
                                         <div className="product-details">
-                                            <h3><a href="single-product.html">Dot Bike Euro Road Helmet</a></h3>
+                                            <h3><a href="single-product.html">{product.name}</a></h3>
                                             <div className="revew">
                                                 <a href="#"><i className="fa fa-star"></i></a>
                                                 <a href="#"><i className="fa fa-star"></i></a>
@@ -268,21 +110,26 @@ class Home extends React.Component {
                                                 <a href="#"><i className="fa fa-star-o"></i></a>
                                             </div>
                                             <div className="price-box">
-                                                <div className="old-price"><span>$300.00</span></div>
-                                                <div className="new-price"><span>$210.00</span></div>
+
+                                                <div className="new-price"><span>{product.price}đ</span></div>
                                             </div>
                                         </div>
                                         <div className="product-hover">
                                             <ul>
                                                 <li><a href="#" className="add-to-cart">Add to cart</a></li>
-                                                <li><a title="Add to Wishlist" href="#" className="add-to-cart"><i
-                                                    className="fa fa-check-square-o"></i></a></li>
-                                                <li><a title="Add to compare" href="#" className="add-to-cart"><i
-                                                    className="fa fa-signal"></i></a></li>
+
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        ))}
+
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="all-product text-center">
+                                <Link to="/products" >Xem tất cả sản phẩm</Link>
                             </div>
                         </div>
                     </div>
@@ -295,7 +142,28 @@ class Home extends React.Component {
                         <div className="col-md-12">
                             <div className="brand-list">
                                 <div className="single-brand">
-                                    <a href="#"><img src="img/brand/1.png" alt=""/></a>
+                                    <a href="#"><img src="img/brand/t1-logo.jpg" alt=""/></a>
+                                </div>
+                                <div className="single-brand">
+                                    <a href="#"><img src="img/brand/inter.png" alt=""/></a>
+                                </div>
+                                <div className="single-brand">
+                                    <a href="#"><img src="img/brand/pirelli.png" alt=""/></a>
+                                </div>
+                                <div className="single-brand">
+                                    <a href="#"><img src="img/brand/bianchi.png" alt=""/></a>
+                                </div>
+                                <div className="single-brand">
+                                    <a href="#"><img src="img/brand/colnago.png" alt=""/></a>
+                                </div>
+                                <div className="single-brand">
+                                    <a href="#"><img src="img/brand/trek.png" alt=""/></a>
+                                </div>
+                                <div className="single-brand">
+                                    <a href="#"><img src="img/brand/bmc.png" alt=""/></a>
+                                </div>
+                                <div className="single-brand">
+                                    <a href="#"><img src="img/brand/merida.png" alt=""/></a>
                                 </div>
                             </div>
                         </div>
@@ -303,7 +171,9 @@ class Home extends React.Component {
                 </div>
             </div>
 
-       <Footer></Footer>
+
+
+             <Footer></Footer>
 
         </div>
     )
