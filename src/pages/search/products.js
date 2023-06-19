@@ -2,11 +2,35 @@ import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
 import Search from "./search";
 import { useLocation } from 'react-router-dom';
+import Header from "../Header";
+import Footer from "../Footer";
 
-const ProductList = () => {
+
+const ProductList = ({ product, addToCart })  => {
     const [products, setProducts] = useState([]);
     const [sortOption, setSortOption] = useState('Default');
     const location = useLocation();
+    const [cartItems, setCartItems] = useState([]);
+
+
+    // Thêm sản phẩm vào giỏ hàng
+    const handleAddToCart = (product) => {
+        const existingProductIndex = cartItems.findIndex((item) => item.id === product.id);
+
+        if (existingProductIndex !== -1) {
+            // Sản phẩm đã tồn tại trong giỏ hàng, tăng quantity lên 1
+            const updatedCartItems = [...cartItems];
+            updatedCartItems[existingProductIndex].quantity += 1;
+            setCartItems(updatedCartItems);
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        } else {
+            // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới vào giỏ hàng
+            const newCartItem = { ...product, quantity: 1 };
+            const updatedCartItems = [...cartItems, newCartItem];
+            setCartItems(updatedCartItems);
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        }
+    };
 
     useEffect(() => {
         // Lấy danh sách sản phẩm từ local storage
@@ -28,104 +52,14 @@ const ProductList = () => {
     }, [sortOption]);
 
 
+    function addToCart(product) {
+
+    }
+
     return (
         <div>
 
-            <div className="header">
-                <div className="header-top">
-                    <div className="container">
-                        <div className="row">
-                        </div>
-                    </div>
-                </div>
-                <div className="header-midle">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-3 col-sm-4 col-xs-12">
-                                <div className="logo">
-                                    <a href="index.html"><img src="img/logo/logo.png" alt=""/></a>
-                                </div>
-                            </div>
-                            <div className="col-md-3 hidden-sm hidden-xs">
-                                <div className="call-us">
-                                    <span><i className="fa fa-phone"></i></span> Call Us: +00965888546-32
-                                </div>
-                            </div>
-                            <div className="col-md-3 col-sm-4  hidden-xs">
-                                <div className="top-email">
-                                    <span><i className="fa fa-envelope-o"></i></span> E-Mail: dotbike@gmail.com
-                                </div>
-                            </div>
-                            <div className="col-md-3 col-sm-4 col-xs-12">
-                                <div className="header-middle-right">
-                                    <div className="login-account">
-                                        <a href="#"><i className="fa fa-user"></i></a>
-                                    </div>
-                                    <div className="mini-cart">
-                                        <a href="#" className="cart-icon"><i
-                                            className="fa fa-shopping-bag"></i> $0.00</a>
-                                        <span>2</span>
-                                        <ul className="cart-area">
-                                            <li className="single-cart">
-                                                <div className="cart-img"><img src="img/cart/cart1.png" alt=""/></div>
-                                                <div className="cart-content">
-                                                    <h4><a href="single-product.html">Mountain Bike <br/> Name Here</a>
-                                                    </h4>
-                                                    <p>$122.00</p>
-                                                </div>
-                                                <div className="cart-del">
-                                                    <a href="#"><i className="fa fa-times"></i></a>
-                                                </div>
-                                            </li>
-                                            <li className="mini-cart-price">
-                                                <div className="cart-price">
-                                                    <span>Total=</span>
-                                                    <span className="total-price">$488.00</span>
-                                                </div>
-                                                <div className="check-out-btn text-center">
-                                                    <a href="#">Check Out</a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="header-bottom sticky-header">
-                    <div className="header-bottom-inner">
-                        <div className="container">
-                            <div className="row">
-                                <div className="mgeamenu-full-width">
-                                    <div className="col-md-9 col-sm-6 col-xs-3">
-                                        <div className="main-menu hidden-sm hidden-xs">
-                                            <nav>
-                                                <ul>
-                                                    <li>
-                                                        <Link to='/'><i className="fa fa-home"></i></Link>
-                                                    </li>
-                                                    <li className="mega_parent"><a href="shop.html">Bikes & Frames</a>
-                                                    </li>
-                                                    <li><a href="shop.html">bikes Parts </a></li>
-                                                    <li><a href="shop.html">Tires & Tubes </a></li>
-                                                    <li className="mega_parent mega-item2"><a href="#">Pages</a>
-                                                    </li>
-                                                    <li><a href="shop.html"> Clothing </a></li>
-                                                    <li><a href="shop.html">Accessories</a></li>
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-3 col-sm-6 col-xs-9">
-                                        <Search></Search>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+     <Header></Header>
 
             <div className="shop-area">
                 <div className="container">
@@ -198,9 +132,8 @@ const ProductList = () => {
                                                         <div className="product-hover">
                                                             <ul>
                                                                 <li>
-                                                                    <a href="#" className="add-to-cart">
-                                                                        Add to cart
-                                                                    </a>
+                                                                    <button className="add-to-cart" onClick={() => handleAddToCart(product)}>Thêm vào giỏ hàng</button>
+
                                                                 </li>
                                                                 <li>
                                                                     <a title="Add to Wishlist" href="#" className="add-to-cart">
@@ -277,68 +210,7 @@ const ProductList = () => {
                 </div>
             </div>
 
-            <div className="footer">
-                <div className="footer-top">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-5 col-sm-6 col-xs-12">
-                                <div className="single-footer footer-dec">
-                                    <div className="footer-logo">
-                                        <a href="#"><img src="img/logo/logo.png" alt=""/></a>
-                                    </div>
-                                    <p className="dec">
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula
-                                        eget dolor.
-                                    </p>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula
-                                        eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
-                                        montes, nascetur ridiculus mus. Donec quam felis,
-                                    </p>
-                                    <div className="social-icon">
-                                        <a href="#"><i className="fa fa-facebook"></i></a>
-                                        <a href="#"><i className="fa fa-twitter"></i></a>
-                                        <a href="#"><i className="fa fa-pinterest-p"></i></a>
-                                        <a href="#"><i className="fa fa-youtube-play"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-md-2 col-sm-6 col-xs-12">
-                            </div>
-                            <div className="col-md-3 col-sm-6 col-xs-12">
-                                <div className="single-footer newsletter">
-                                    <div className="footer-title">
-                                        <h4>Newsletter</h4>
-                                    </div>
-                                    <p>Subscibe to the Shaeng mailing list to receive updates on new arrivals,offers and
-                                        other discount information</p>
-                                    <form action="#">
-                                        <input type="text" placeholder="Write your e-mail here"/>
-                                        <button>Subscribe</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="footer-botton">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-6 col-xs-12 col-sm-12">
-                                <p>Copyright © dotbike 2022 | Design by <a target="_blank"
-                                                                           href="https://dotthemes.com/">dotthemes.com</a> |
-                                    All rights reserved</p>
-                            </div>
-                            <div className="col-md-6 col-xs-12 col-sm-12">
-                                <div className="master-card">
-                                    <a href="#"><img src="img/logo/cont.png" alt=""/></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Footer></Footer>
 
         </div>
     );
