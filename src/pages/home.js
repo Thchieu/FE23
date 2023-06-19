@@ -129,7 +129,7 @@ class Home extends React.Component {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="all-product text-center">
-                                <Link to="/products" >Xem tất cả sản phẩm</Link>
+                                <Link to="/productList" >Xem tất cả sản phẩm</Link>
                             </div>
                         </div>
                     </div>
