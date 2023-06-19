@@ -3,29 +3,83 @@ import axios from 'axios';
 import Header from "../Header";
 import Footer from "../Footer";
 import products from "../search/products";
+import {Link} from "react-router-dom";
+import numeral from 'numeral';
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [cartTotal, setCartTotal] = useState(0);
+    const [subtotal, setSubtotal] = useState(0);
+    const [shippingCost, setShippingCost] = useState(0);
     useEffect(() => {
         const savedCartItems = localStorage.getItem('cartItems');
+        const savedCartTotal = localStorage.getItem('cartTotal');
         if (savedCartItems) {
             setCartItems(JSON.parse(savedCartItems));
-            calculateCartTotal();
         }
+        if (savedCartTotal) {
+            setCartTotal(Number(savedCartTotal));
+        }
+        calculateCartTotal();// Tính lại giá trị cartTotal khi component được tải lên
     }, []);
     useEffect(() => {
         calculateCartTotal();
-    }, []);
+    }, [cartItems]);
     const removeProduct = (index) => {
-        const updatedCartItems = cartItems.filter((_, i) => i !== index);
+        const updatedCartItems = cartItems.map((item, i) => {
+            if (i === index) {
+                const updatedQuantity = item.quantity - 1;
+                if (updatedQuantity <= 0) {
+                    return null; // Xóa sản phẩm khỏi giỏ hàng
+                }
+                return {
+                    ...item,
+                    quantity: updatedQuantity
+                };
+            }
+            return item;
+        }).filter(Boolean); // Lọc bỏ các phần tử null (sản phẩm bị xóa)
+
         setCartItems(updatedCartItems);
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        calculateCartTotal();
     };
 
 
     const calculateCartTotal = () => {
-        const total = cartItems.reduce((accumulator, item) => accumulator + item.price * item.quantity, 0);
+        const total = cartItems.reduce(
+            (accumulator, item) => accumulator + item.price * item.quantity,
+            0
+        );
         setCartTotal(total);
+        setSubtotal(total);
+        let shipping;
+        if (total >= 10000000 && total <= 20000000) {
+            shipping = 150000;
+        } else if (total >= 20000001 && total <= 40000000) {
+            shipping = 200000;
+        }else if (total >= 40000001 ) {
+            shipping = 250000;
+        } else {
+            shipping = 0;
+        }
+        setShippingCost(shipping);
+        localStorage.setItem('cartTotal', total.toString());
+    };
+const cost = shippingCost;
+
+    const updateCartItemQuantity = (productId, quantity) => {
+        const updatedCartItems = cartItems.map((item) => {
+            if (item.id === productId) {
+                return {
+                    ...item,
+                    quantity: Number(quantity)
+                };
+            }
+            return item;
+        });
+        setCartItems(updatedCartItems);
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        calculateCartTotal();
     };
     return (
         <div>
@@ -67,10 +121,10 @@ const Cart = () => {
                                     {cartItems.map((product, index) => (
 
                                     <tr key={index}>
-                                        <td className="cart-product"><a href="#"><img src="img/cart1.png" alt=""/></a>
+                                        <td className="cart-product"><img src={product.image}  />
                                         </td>
                                         <td className="cart-name">
-                                            <h3><a href="">{product.name}</a></h3>
+                                            <h3>   <Link to={`/product/${product.id}`}>{product.name}</Link></h3>
                                             <div className="revew">
                                                 <a href="#"><i className="fa fa-star"></i></a>
                                                 <a href="#"><i className="fa fa-star"></i></a>
@@ -89,7 +143,7 @@ const Cart = () => {
                                                             <div className="cart-plus-minus">
 
 
-                                                                <input type="text" value={product.quantity} name="qtybutton" className="cart-plus-minus-box" onChange={(e) => product.updateCartItemQuantity(product.id, e.target.value)
+                                                                <input type="text" value={product.quantity} name="qtybutton" className="cart-plus-minus-box" onChange={(e) => updateCartItemQuantity(product.id, e.target.value)
                                                                     }
                                                                 />
 
@@ -101,10 +155,10 @@ const Cart = () => {
                                             </div>
                                         </td>)}
 
-                                        <td className="price-cart">{product.price}</td>
+                                        <td className="price-cart">{numeral(product.price).format('0,0')}</td>
                                         {cartItems.findIndex((item) => item.id === product.id) !== -1 && (
 
-                                        <td className="total-cart-price">{product.price * product.quantity}</td>)}
+                                        <td className="total-cart-price">{numeral(product.price * product.quantity).format('0,0')}</td>)}
                                         <td className="cart-remove"> <button onClick={() => removeProduct(index)}><i className="fa fa-times"></i></button></td>
                                     </tr>
                                         ))}
@@ -120,7 +174,8 @@ const Cart = () => {
                         <div className="col-md-3 col-sm-4 col-xs-12">
                             <div className="update-cart-btn">
                                 <div className="update-cart-btn-inner">
-                                    <a href="#">update cart</a>
+                                    <Link to="/products"> update cart</Link>
+
                                 </div>
                             </div>
                         </div>
@@ -141,11 +196,12 @@ const Cart = () => {
                                 <h4>Cart total</h4>
                                 <div className="cart-inner">
                                     <ul>
-                                        <li>Subtotal <span>{cartTotal.toFixed(2)}</span></li>
-                                        <li>Shipping cost <span>25.00$</span></li>
+                                        <li>Subtotal <span>{numeral(subtotal).format('0,0')}</span></li>
+
+                                        <li>Shipping cost <span>{numeral(shippingCost).format('0,0')}</span></li>
                                     </ul>
                                 </div>
-                                <p>Total <span>1225.00$</span></p>
+                                <p>Total <span>{numeral(cartTotal +cost).format('0,0')}</span></p>
                                 <div className="proceed-out">
                                     <a href="#">Proceed to Checkout</a>
                                 </div>

@@ -4,8 +4,7 @@ import Search from "./search";
 import { useLocation } from 'react-router-dom';
 import Header from "../Header";
 import Footer from "../Footer";
-import Cart  from "../cart/Cart";
-import cart from "../cart/Cart";
+
 
 
 
@@ -14,7 +13,7 @@ const ProductList = ({ product, addToCart })  => {
     const [sortOption, setSortOption] = useState('Default');
     const location = useLocation();
     const [cartItems, setCartItems] = useState([]);
-    const [cartTotal, setCartTotal] = useState(0);
+
 
     // Thêm sản phẩm vào giỏ hàng
     const handleAddToCart = (product) => {
@@ -33,9 +32,13 @@ const ProductList = ({ product, addToCart })  => {
             setCartItems(updatedCartItems);
             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
         }
-
-
     };
+    useEffect(() => {
+        const savedCartItems = localStorage.getItem('cartItems');
+        if (savedCartItems) {
+            setCartItems(JSON.parse(savedCartItems));
+        }
+    }, []);
 
     useEffect(() => {
         // Lấy danh sách sản phẩm từ local storage
@@ -57,9 +60,7 @@ const ProductList = ({ product, addToCart })  => {
     }, [sortOption]);
 
 
-    function addToCart(product) {
 
-    }
 
     return (
         <div>
@@ -141,14 +142,14 @@ const ProductList = ({ product, addToCart })  => {
 
                                                                 </li>
                                                                 <li>
-                                                                    <a title="Add to Wishlist" href="#" className="add-to-cart">
+                                                                    <button title="Add to Wishlist" href="#" className="add-to-cart">
                                                                         <i className="fa fa-check-square-o"></i>
-                                                                    </a>
+                                                                    </button>
                                                                 </li>
                                                                 <li>
-                                                                    <a title="Add to compare" href="#" className="add-to-cart">
+                                                                    <button title="Add to compare" href="#" className="add-to-cart">
                                                                         <i className="fa fa-signal"></i>
-                                                                    </a>
+                                                                    </button>
                                                                 </li>
                                                             </ul>
                                                         </div>

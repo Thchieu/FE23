@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import Search from "./search/search";
 import Header from "./Header";
@@ -29,6 +29,21 @@ class Home extends React.Component {
         window.location.reload();
     };
 
+    handleAddToCart = (product) => {
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const existingProductIndex = cartItems.findIndex((item) => item.id === product.id);
+
+        if (existingProductIndex !== -1) {
+            // Sản phẩm đã tồn tại trong giỏ hàng, tăng quantity lên 1
+            cartItems[existingProductIndex].quantity += 1;
+        } else {
+            // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới vào giỏ hàng
+            const newCartItem = { ...product, quantity: 1 };
+            cartItems.push(newCartItem);
+        }
+
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    };
 
     render() {
         // Khai báo biến products và gán cho nó mảng sản phẩm từ API trả về
@@ -116,7 +131,8 @@ class Home extends React.Component {
                                         </div>
                                         <div className="product-hover">
                                             <ul>
-                                                <li><a href="#" className="add-to-cart">Add to cart</a></li>
+                                                {/* eslint-disable-next-line no-undef */}
+                                                <li>    <button className="add-to-cart" onClick={() => this.handleAddToCart(product)}>Thêm  giỏ hàng</button></li>
 
                                             </ul>
                                         </div>

@@ -9,6 +9,30 @@ function ProductDetail() {
     const [product, setProduct] = useState({});
     const [relatedProduct, setRelatedProduct] = useState([]);
     const { id } = useParams();
+    const [cartItems, setCartItems] = useState([]);
+    const handleAddToCart = (product) => {
+        const existingProductIndex = cartItems.findIndex((item) => item.id === product.id);
+
+        if (existingProductIndex !== -1) {
+            // Sản phẩm đã tồn tại trong giỏ hàng, tăng quantity lên 1
+            const updatedCartItems = [...cartItems];
+            updatedCartItems[existingProductIndex].quantity += 1;
+            setCartItems(updatedCartItems);
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        } else {
+            // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới vào giỏ hàng
+            const newCartItem = { ...product, quantity: 1 };
+            const updatedCartItems = [...cartItems, newCartItem];
+            setCartItems(updatedCartItems);
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        }
+    };
+    useEffect(() => {
+        const savedCartItems = localStorage.getItem('cartItems');
+        if (savedCartItems) {
+            setCartItems(JSON.parse(savedCartItems));
+        }
+    }, []);
     useEffect(() => {
         axios.get(`https://648c3bc98620b8bae7ec83c4.mockapi.io/api/products/${id}`)
             .then(response => {
@@ -132,14 +156,15 @@ function ProductDetail() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <form action="src/pages#">
+
                                                 <div className="quantity">
                                                     <span>QTY <input type="number" value="1"/></span>
                                                     <span className="single-product-btn">
-                                            <a href="src/pages#">Add to cart</a>
+                                            <button className="add-to-cart" onClick={() => handleAddToCart(product)}>Thêm giỏ hàng</button>
+
                                         </span>
                                                 </div>
-                                            </form>
+
                                             <div className="product-det-tab">
 
                                                 <ul className="nav nav-tabs" role="tablist">
@@ -212,15 +237,15 @@ function ProductDetail() {
                                                                 </div>
                                                                 <div className="product-hover">
                                                                     <ul>
-                                                                        <li><a href="src/pages#" className="add-to-cart">Add to
-                                                                            cart</a></li>
-                                                                        <li><a title="Add to Wishlist" href="src/pages#"
-                                                                               className="add-to-cart"><i
-                                                                            className="fa fa-check-square-o"></i></a>
+                                                                        <li> <button className="add-to-cart" onClick={() => handleAddToCart(product)}>Thêm giỏ hàng</button>
                                                                         </li>
-                                                                        <li><a title="Add to compare" href="src/pages#"
+                                                                        <li><button title="Add to Wishlist" href="src/pages#"
                                                                                className="add-to-cart"><i
-                                                                            className="fa fa-signal"></i></a></li>
+                                                                            className="fa fa-check-square-o"></i></button>
+                                                                        </li>
+                                                                        <li><button title="Add to compare" href="src/pages#"
+                                                                               className="add-to-cart"><i
+                                                                            className="fa fa-signal"></i></button></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
