@@ -845,7 +845,7 @@ span.price {
     display: inline-block;
     margin-left: 5px;
 }
-.product-hover ul li a {
+.product-hover ul li a{
     background: #2ba8db none repeat scroll 0 0;
     border-radius: 5px;
     color: #ffffff;
@@ -857,6 +857,20 @@ span.price {
     text-transform: uppercase;
 }
 .product-hover ul li a.add-to-cart {
+    padding: 0 14px;
+}
+.product-hover ul li  button{
+    background: #2ba8db none repeat scroll 0 0;
+    border-radius: 5px;
+    color: #ffffff;
+    display: block;
+    font-weight: bold;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 8px;
+    text-transform: uppercase;
+}
+.product-hover ul li button.add-to-cart {
     padding: 0 14px;
 }
 .product-hover ul li:first-child {
@@ -1752,11 +1766,15 @@ table tbody tr td {
   padding: 15px 0;
   text-align: center;
 }
-.cart-product > a {
-  background: #fff none repeat scroll 0 0;
-  border: 1px solid #ddd;
-  display: block;
-  padding: 12px 0;
+
+.cart-product  img {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    display: block;
+    padding: 20px 0px;
+    width: 200px;
+    margin-left: 40px;
+
 }
 .cart-name h3 {
     font-size: 17px;
@@ -1813,6 +1831,7 @@ table tbody tr td {
     -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
     width: 100%;
+
 }
 .apply-coupon > input {
   background: #ebebeb none repeat scroll 0 0;

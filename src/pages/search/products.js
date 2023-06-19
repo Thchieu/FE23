@@ -4,8 +4,7 @@ import Search from "./search";
 import { useLocation } from 'react-router-dom';
 import Header from "../Header";
 import Footer from "../Footer";
-import Cart  from "../cart/Cart";
-import cart from "../cart/Cart";
+
 
 
 
@@ -35,7 +34,14 @@ const ProductList = ({ product, addToCart })  => {
         }
 
 
+
     };
+    useEffect(() => {
+        const savedCartItems = localStorage.getItem('cartItems');
+        if (savedCartItems) {
+            setCartItems(JSON.parse(savedCartItems));
+        }
+    }, []);
 
     useEffect(() => {
         // Lấy danh sách sản phẩm từ local storage
@@ -57,9 +63,7 @@ const ProductList = ({ product, addToCart })  => {
     }, [sortOption]);
 
 
-    function addToCart(product) {
 
-    }
 
     return (
         <div>
