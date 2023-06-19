@@ -7,7 +7,7 @@ import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
 import ProductList from "./pages/search/products";
 import Cart from "./pages/cart/Cart";
-
+import ProductDetail from "./pages/details/ProductDetail";
 function App() {
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState([]);
@@ -43,6 +43,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
             <Route path="/products" element={<ProductList />} />

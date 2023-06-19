@@ -72,13 +72,13 @@ const ProductList = ({ product, addToCart })  => {
                         <div className="col-md-12 col-sm-12 col-xs-12">
                             <div className="shop-item-filter">
                                 <div className="toolber-form left">
-                                    <p className="filter-title">sort by: </p>
+                                    <p className="filter-title">Sắp xếp: </p>
                                     <div className="filter-form">
                                         <form action="#">
                                             <select value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
-                                                <option value="Default">Default</option>
-                                                <option value="PriceLow">Price: low to high</option>
-                                                <option value="PriceHigh">Price: high to low</option>
+                                                <option value="Default">Mặc Định</option>
+                                                <option value="PriceLow">Giá : Thấp - Cao</option>
+                                                <option value="PriceHigh">Giá : Cao - Thấp</option>
                                             </select>
                                         </form>
                                     </div>
