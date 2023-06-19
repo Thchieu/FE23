@@ -26,8 +26,18 @@ class Header extends React.Component {
                 <div class="header-top">
                     <div class="container">
                         <div class="row">
-                            <div className="col-md-6 col-sm-8 col-xs-12"></div>
+                            <div className="col-md-6 col-sm-8 col-xs-12">
+                                <div className="currency">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Chào mừng bạn đến với DOTBIKE</a>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                             <div class="col-md-6 col-sm-8 col-xs-12">
+
                                 <div class="top-bar-menu">
                                     <ul>
                                         <li>{isLoggedIn  ? (
@@ -35,10 +45,10 @@ class Header extends React.Component {
                                                 Logout
                                             </Link>
                                         ) : (
-                                            <Link to="/login">Login</Link>
+                                            <Link to="/login">Tài Khoản</Link>
                                         )}</li>
                                         <li><a href="#"> Wish List (0)</a></li>
-                                        <li>  <Link to="/cart">Shopping Cart</Link> </li>
+                                        <li>  <Link to="/cart">Giỏ Hàng</Link> </li>
                                         <li><a target="_blank" href="checkout.html"> Checkout</a></li>
                                     </ul>
                                 </div>
@@ -50,13 +60,13 @@ class Header extends React.Component {
                     <div class="container">
                         <div class="row">
                             <div class="col-md-3 col-sm-4 col-xs-12">
-                                <div class="logo">
-                                    <a href="index.html"><img src="img/logo/logo.png" alt=""/></a>
+                                <div class="logo"> <Link to="/">
+                                    <a><img src="img/logo/logo.png" alt=""/></a></Link>
                                 </div>
                             </div>
                             <div class="col-md-3 hidden-sm hidden-xs">
                                 <div class="call-us">
-                                    <span><i class="fa fa-phone"></i></span> Call Us: +00965888546-32
+                                    <span><i class="fa fa-phone"></i></span> Call Us: +84 3456 789 10
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-4  hidden-xs">
@@ -66,13 +76,13 @@ class Header extends React.Component {
                             </div>
                             <div class="col-md-3 col-sm-4 col-xs-12">
                                 <div class="header-middle-right">
-                                    <div class="login-account">
-                                        <a href="#"><i class="fa fa-user"></i></a>
+                                    <div class="login-account"> <Link to="/login">
+                                        <a><i class="fa fa-user"></i></a></Link>
                                     </div>
-                                    <div class="mini-cart">
-                                        <a href="#" class="cart-icon"><i class="fa fa-shopping-bag"></i> $0.00</a>
-                                        <span>2</span>
-                                        <ul class="cart-area">
+                                    <div class="mini-cart"> <Link to="/cart">
+                                        <a class="cart-icon"><i class="fa fa-shopping-bag"></i></a>
+                                        <span></span></Link>
+                                    <ul class="cart-area">
                                             <li class="single-cart">
                                                 <div class="cart-img"><img src="img/cart/cart1.png" alt=""/></div>
                                                 <div class="cart-content">
@@ -108,16 +118,17 @@ class Header extends React.Component {
                                         <div class="main-menu hidden-sm hidden-xs">
                                             <nav>
                                                 <ul>
-                                                    <li><a class="home" href="index.html"><i class="fa fa-home"></i></a>
+                                                    <li>
+                                                        <Link to='/'><i className="fa fa-home"></i></Link>
                                                     </li>
-                                                    <li class="mega_parent"><a href="shop.html">Bikes & Frames</a>
+                                                    <li className="mega_parent">
+                                                        <Link to='/'>Trang chủ</Link>
                                                     </li>
-                                                    <li><a href="shop.html">bikes Parts  </a></li>
-                                                    <li><a href="shop.html">Tires & Tubes  </a></li>
-                                                    <li class="mega_parent mega-item2"><a href="#">Pages</a>
-                                                    </li>
-                                                    <li><a href="shop.html"> Clothing   </a></li>
-                                                    <li><a href="shop.html">Accessories</a></li>
+                                                    <li><Link to="/products">Sản Phẩm</Link></li>
+                                                    <li><Link to="/login">Tài Khoản</Link></li>
+
+                                                    <li><Link to="/cart">Giỏ Hàng</Link></li>
+                                                    <li><a href="shop.html">Thanh Toán</a></li>
                                                 </ul>
                                             </nav>
                                         </div>

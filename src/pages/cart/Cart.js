@@ -9,6 +9,7 @@ const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [cartTotal, setCartTotal] = useState(0);
     const [subtotal, setSubtotal] = useState(0);
+    const [shippingCost, setShippingCost] = useState(0);
     useEffect(() => {
         const savedCartItems = localStorage.getItem('cartItems');
         const savedCartTotal = localStorage.getItem('cartTotal');
@@ -51,9 +52,20 @@ const Cart = () => {
         );
         setCartTotal(total);
         setSubtotal(total);
+        let shipping;
+        if (total >= 10000000 && total <= 20000000) {
+            shipping = 150000;
+        } else if (total >= 20000001 && total <= 40000000) {
+            shipping = 200000;
+        }else if (total >= 40000001 ) {
+            shipping = 250000;
+        } else {
+            shipping = 0;
+        }
+        setShippingCost(shipping);
         localStorage.setItem('cartTotal', total.toString());
     };
-const cost = 150000;
+const cost = shippingCost;
 
     const updateCartItemQuantity = (productId, quantity) => {
         const updatedCartItems = cartItems.map((item) => {
@@ -112,7 +124,7 @@ const cost = 150000;
                                         <td className="cart-product"><img src={product.image}  />
                                         </td>
                                         <td className="cart-name">
-                                            <h3><a href="">{product.name}</a></h3>
+                                            <h3>   <Link to={`/product/${product.id}`}>{product.name}</Link></h3>
                                             <div className="revew">
                                                 <a href="#"><i className="fa fa-star"></i></a>
                                                 <a href="#"><i className="fa fa-star"></i></a>
@@ -186,7 +198,7 @@ const cost = 150000;
                                     <ul>
                                         <li>Subtotal <span>{numeral(subtotal).format('0,0')}</span></li>
 
-                                        <li>Shipping cost <span>{numeral(cost).format('0,0')}</span></li>
+                                        <li>Shipping cost <span>{numeral(shippingCost).format('0,0')}</span></li>
                                     </ul>
                                 </div>
                                 <p>Total <span>{numeral(cartTotal +cost).format('0,0')}</span></p>

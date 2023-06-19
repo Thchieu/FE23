@@ -21,8 +21,6 @@ class Footer extends React.Component {
         const { isLoggedIn } = this.state;
         return(
         <div>
-
-
             <div className="footer">
                 <div className="footer-top">
                     <div className="container">
@@ -30,16 +28,18 @@ class Footer extends React.Component {
                             <div className="col-md-5 col-sm-6 col-xs-12">
                                 <div className="single-footer footer-dec">
                                     <div className="footer-logo">
-                                        <a href="#"><img src="img/logo/logo.png" alt=""/></a>
+                                        <a ><img src="img/logo/logo.png" alt=""/></a>
                                     </div>
                                     <p className="dec">
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula
-                                        eget dolor.
+                                       Xe đạp tốt nhất cho sự lựa chọn của bạn.
                                     </p>
                                     <p>
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula
-                                        eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
-                                        montes, nascetur ridiculus mus. Donec quam felis,
+                                        Xe đạp là phương tiện di chuyển đơn, chạy bằng sức người hoặc
+                                        gắn thêm động cơ trợ lực. Xe đạp gồm một bánh trước và một bánh sau,
+                                        gắn với nhau thông qua hệ thống khung xe và cách nhau một khoảng vừa phải.
+                                        Xe đạp có cấu tạo đơn giản, dễ sử dụng.Xe đạp được thiết kế với nhiều mẫu mã
+                                        khác nhau. Mỗi chiếc xe sẽ có những đặc điểm riêng để di chuyển thuận tiện trên
+                                        từng loại địa hình.
                                     </p>
                                     <div className="social-icon">
                                         <a href="#"><i className="fa fa-facebook"></i></a>
@@ -49,8 +49,23 @@ class Footer extends React.Component {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="col-md-2 col-sm-6 col-xs-12">
+
+                            </div>
+                            <div className="col-md-2 col-sm-6 col-xs-12">
+                                <div className="single-footer">
+                                    <div className="footer-title">
+                                        <h4>Trang</h4>
+                                    </div>
+                                    <ul className="mainmenu">
+                                        <li>
+                                            <Link to="/products">Sản Phẩm</Link>
+                                        </li>
+                                        <li><Link to="/login">Tài Khoản</Link></li>
+                                        <li><Link to="/cart">Giỏ Hàng</Link></li>
+                                        <li><Link to="/">Thanh Toán</Link></li>
+                                    </ul>
+                                </div>
                             </div>
                             <div className="col-md-3 col-sm-6 col-xs-12">
                                 <div className="single-footer newsletter">
@@ -85,6 +100,9 @@ class Footer extends React.Component {
                     </div>
                 </div>
             </div>
+
+
+
 
         </div>
     )
