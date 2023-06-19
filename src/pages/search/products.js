@@ -4,6 +4,9 @@ import Search from "./search";
 import { useLocation } from 'react-router-dom';
 import Header from "../Header";
 import Footer from "../Footer";
+import Cart  from "../cart/Cart";
+import cart from "../cart/Cart";
+
 
 
 const ProductList = ({ product, addToCart })  => {
@@ -11,7 +14,7 @@ const ProductList = ({ product, addToCart })  => {
     const [sortOption, setSortOption] = useState('Default');
     const location = useLocation();
     const [cartItems, setCartItems] = useState([]);
-
+    const [cartTotal, setCartTotal] = useState(0);
 
     // Thêm sản phẩm vào giỏ hàng
     const handleAddToCart = (product) => {
@@ -30,6 +33,8 @@ const ProductList = ({ product, addToCart })  => {
             setCartItems(updatedCartItems);
             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
         }
+
+
     };
 
     useEffect(() => {

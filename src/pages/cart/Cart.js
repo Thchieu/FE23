@@ -5,12 +5,16 @@ import Footer from "../Footer";
 import products from "../search/products";
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
-
+    const [cartTotal, setCartTotal] = useState(0);
     useEffect(() => {
         const savedCartItems = localStorage.getItem('cartItems');
         if (savedCartItems) {
             setCartItems(JSON.parse(savedCartItems));
+            calculateCartTotal();
         }
+    }, []);
+    useEffect(() => {
+        calculateCartTotal();
     }, []);
     const removeProduct = (index) => {
         const updatedCartItems = cartItems.filter((_, i) => i !== index);
@@ -19,6 +23,10 @@ const Cart = () => {
     };
 
 
+    const calculateCartTotal = () => {
+        const total = cartItems.reduce((accumulator, item) => accumulator + item.price * item.quantity, 0);
+        setCartTotal(total);
+    };
     return (
         <div>
     <Header></Header>
@@ -72,25 +80,31 @@ const Cart = () => {
                                                 <span>(17)</span>
                                             </div>
                                         </td>
+                                        {cartItems.findIndex((item) => item.id === product.id) !== -1 && (
                                         <td>
                                             <div className="cart-quantity">
                                                 <form action="#" method="POST">
                                                     <div className="product-quantity">
                                                         <div className="cart-quantity">
                                                             <div className="cart-plus-minus">
-                                                                {cartItems.findIndex((item) => item.id === product.id) !== -1 && (
 
-                                                                <input type="text" value={cartItems.find((item) => item.id === product.id).quantity} name="qtybutton" className="cart-plus-minus-box"/>
 
-                                                            )}
+                                                                <input type="text" value={product.quantity} name="qtybutton" className="cart-plus-minus-box" onChange={(e) => product.updateCartItemQuantity(product.id, e.target.value)
+                                                                    }
+                                                                />
+
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
-                                        </td>
+                                        </td>)}
+
                                         <td className="price-cart">{product.price}</td>
-                                        <td className="total-cart-price">$45.00</td>
+                                        {cartItems.findIndex((item) => item.id === product.id) !== -1 && (
+
+                                        <td className="total-cart-price">{product.price * product.quantity}</td>)}
                                         <td className="cart-remove"> <button onClick={() => removeProduct(index)}><i className="fa fa-times"></i></button></td>
                                     </tr>
                                         ))}
@@ -127,7 +141,7 @@ const Cart = () => {
                                 <h4>Cart total</h4>
                                 <div className="cart-inner">
                                     <ul>
-                                        <li>Subtotal <span>1200.00$</span></li>
+                                        <li>Subtotal <span>{cartTotal.toFixed(2)}</span></li>
                                         <li>Shipping cost <span>25.00$</span></li>
                                     </ul>
                                 </div>

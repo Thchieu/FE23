@@ -38,7 +38,7 @@ class Header extends React.Component {
                                             <Link to="/login">Login</Link>
                                         )}</li>
                                         <li><a href="#"> Wish List (0)</a></li>
-                                        <li><a target="_blank" href="cart-page.html"> Shopping Cart</a></li>
+                                        <li>  <Link to="/cart">Shopping Cart</Link> </li>
                                         <li><a target="_blank" href="checkout.html"> Checkout</a></li>
                                     </ul>
                                 </div>
