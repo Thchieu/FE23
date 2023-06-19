@@ -56,13 +56,13 @@ const Cart = () => {
                                     </thead>
 
                                     <tbody>
-                                    {cartItems.map((item, index) => (
+                                    {cartItems.map((product, index) => (
 
                                     <tr key={index}>
                                         <td className="cart-product"><a href="#"><img src="img/cart1.png" alt=""/></a>
                                         </td>
                                         <td className="cart-name">
-                                            <h3><a href="">{item.name}</a></h3>
+                                            <h3><a href="">{product.name}</a></h3>
                                             <div className="revew">
                                                 <a href="#"><i className="fa fa-star"></i></a>
                                                 <a href="#"><i className="fa fa-star"></i></a>
@@ -78,17 +78,18 @@ const Cart = () => {
                                                     <div className="product-quantity">
                                                         <div className="cart-quantity">
                                                             <div className="cart-plus-minus">
-                                                                <div className="deco qtybutton">-</div>
-                                                                <input type="text" value={1} name="qtybutton"
-                                                                       className="cart-plus-minus-box"/>
-                                                                    <div className="inco qtybutton">+</div>
+                                                                {cartItems.findIndex((item) => item.id === product.id) !== -1 && (
+
+                                                                <input type="text" value={cartItems.find((item) => item.id === product.id).quantity} name="qtybutton" className="cart-plus-minus-box"/>
+
+                                                            )}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </td>
-                                        <td className="price-cart">{item.price}</td>
+                                        <td className="price-cart">{product.price}</td>
                                         <td className="total-cart-price">$45.00</td>
                                         <td className="cart-remove"> <button onClick={() => removeProduct(index)}><i className="fa fa-times"></i></button></td>
                                     </tr>
