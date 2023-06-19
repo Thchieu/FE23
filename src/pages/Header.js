@@ -124,8 +124,8 @@ class Header extends React.Component {
                                                     <li className="mega_parent">
                                                         <Link to='/'>Trang chủ</Link>
                                                     </li>
-                                                    <li><Link to="/products">Sản Phẩm</Link></li>
-                                                    <li><Link to="/login">Tài Khoản</Link></li>
+                                                    <li><Link to="/productList">Sản Phẩm</Link></li>
+
 
                                                     <li><Link to="/cart">Giỏ Hàng</Link></li>
                                                     <li><a href="shop.html">Thanh Toán</a></li>
