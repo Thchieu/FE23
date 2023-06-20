@@ -4,6 +4,7 @@ import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import Header from "../Header";
 import Footer from "../Footer";
+import numeral from "numeral";
 
 function ProductDetail() {
     const [product, setProduct] = useState({});
@@ -83,6 +84,7 @@ function ProductDetail() {
                                 <div className="categoryies-option">
                                     <div className="h4"><span style={{
                                         padding: '8px 10px',
+                                        background:' #ddd',
 
                                     }}>Thông số</span></div>
                                     <div role="tabpanel" className="cont-pd tab-pane"
@@ -147,7 +149,7 @@ function ProductDetail() {
                                             <div className="single-product-detels">
                                                 <h4 className="single-product-title">{product.name}</h4>
                                                 <div className="single-price-box">
-                                                    <div className="tutole-price"><span>{product.price}</span></div>
+                                                    <div className="tutole-price"><span>{numeral(product.price).format('0,0')}đ</span></div>
                                                     <div className="revew">
                                                         <a href="src/pages#"><i className="fa fa-star"></i></a>
                                                         <a href="src/pages#"><i className="fa fa-star"></i></a>
@@ -232,7 +234,7 @@ function ProductDetail() {
                                                                     </div>
                                                                     <div className="price-box">
 
-                                                                        <div className="new-price"><span>{product.price}đ</span>
+                                                                        <div className="new-price"><span>{numeral(product.price).format('0,0')}đ</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -240,13 +242,7 @@ function ProductDetail() {
                                                                     <ul>
                                                                         <li> <button className="add-to-cart" onClick={() => handleAddToCart(product)}>Thêm giỏ hàng</button>
                                                                         </li>
-                                                                        <li><button title="Add to Wishlist" href="src/pages#"
-                                                                               className="add-to-cart"><i
-                                                                            className="fa fa-check-square-o"></i></button>
-                                                                        </li>
-                                                                        <li><button title="Add to compare" href="src/pages#"
-                                                                               className="add-to-cart"><i
-                                                                            className="fa fa-signal"></i></button></li>
+
                                                                     </ul>
                                                                 </div>
                                                             </div>
