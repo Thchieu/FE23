@@ -47,8 +47,14 @@ class Header extends React.Component {
                                         ) : (
                                             <Link to="/login">Tài Khoản</Link>
                                         )}</li>
-                                        <li><a href="#"> Wish List (0)</a></li>
-                                        <li>  <Link to="/cart">Giỏ Hàng</Link> </li>
+
+                                        <li>  {isLoggedIn  ? (
+                                            <Link to="/cart">
+                                                Giỏ hàng
+                                            </Link>
+                                        ) : (
+                                            <Link to="/login">Giỏ hàng</Link>
+                                        )} </li>
                                         <li><a target="_blank" href="checkout.html"> Checkout</a></li>
                                     </ul>
                                 </div>
@@ -81,28 +87,8 @@ class Header extends React.Component {
                                     </div>
                                     <div class="mini-cart"> <Link to="/cart">
                                         <a class="cart-icon"><i class="fa fa-shopping-bag"></i></a>
-                                        <span></span></Link>
-                                    <ul class="cart-area">
-                                            <li class="single-cart">
-                                                <div class="cart-img"><img src="img/cart/cart1.png" alt=""/></div>
-                                                <div class="cart-content">
-                                                    <h4><a href="single-product.html">Mountain Bike <br/> Name Here</a></h4>
-                                                    <p>$122.00</p>
-                                                </div>
-                                                <div class="cart-del">
-                                                    <a href="#"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="mini-cart-price">
-                                                <div class="cart-price">
-                                                    <span>Total=</span>
-                                                    <span class="total-price">$488.00</span>
-                                                </div>
-                                                <div class="check-out-btn text-center">
-                                                    <a href="#">Check Out</a>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                       </Link>
+
                                     </div>
                                 </div>
                             </div>
@@ -127,8 +113,20 @@ class Header extends React.Component {
                                                     <li><Link to="/productList">Sản Phẩm</Link></li>
 
 
-                                                    <li><Link to="/cart">Giỏ Hàng</Link></li>
-                                                    <li><a href="shop.html">Thanh Toán</a></li>
+                                                    <li>{isLoggedIn  ? (
+                                                        <Link to="/cart">
+                                                            Giỏ hàng
+                                                        </Link>
+                                                    ) : (
+                                                        <Link to="/login">Giỏ hàng</Link>
+                                                    )}</li>
+                                                    <li>{isLoggedIn  ? (
+                                                        <Link to="/checkout">
+                                                            Thanh toán
+                                                        </Link>
+                                                    ) : (
+                                                        <Link to="/login">Thanh toán</Link>
+                                                    )}</li>
                                                 </ul>
                                             </nav>
                                         </div>

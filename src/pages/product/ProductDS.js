@@ -10,7 +10,34 @@ const ProductDS = () => {
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [sortOption, setSortOption] = useState('Default');
+    const [cartItems, setCartItems] = useState([]);
 
+
+    // Thêm sản phẩm vào giỏ hàng
+    const handleAddToCart = (product) => {
+        const existingProductIndex = cartItems.findIndex((item) => item.id === product.id);
+
+        if (existingProductIndex !== -1) {
+            // Sản phẩm đã tồn tại trong giỏ hàng, tăng quantity lên 1
+            const updatedCartItems = [...cartItems];
+            updatedCartItems[existingProductIndex].quantity += 1;
+            setCartItems(updatedCartItems);
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        } else {
+            // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới vào giỏ hàng
+            const newCartItem = { ...product, quantity: 1 };
+            const updatedCartItems = [...cartItems, newCartItem];
+            setCartItems(updatedCartItems);
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        }
+        alert("Thêm vào giỏ hàng thành công")
+    };
+    useEffect(() => {
+        const savedCartItems = localStorage.getItem('cartItems');
+        if (savedCartItems) {
+            setCartItems(JSON.parse(savedCartItems));
+        }
+    }, []);
 
     useEffect(() => {
         const fProducts = async () => {
@@ -187,7 +214,7 @@ const ProductDS = () => {
                                                         </div>
                                                         <div className="product-hover">
                                                             <ul>
-                                                                <li><a href="#" className="add-to-cart">Add to cart</a>
+                                                                <li>          <button className="add-to-cart" onClick={() => handleAddToCart(product)}>Thêm vào giỏ hàng</button>
                                                                 </li>
 
                                                             </ul>
@@ -236,7 +263,8 @@ const ProductDS = () => {
                                                         </div>
                                                         <div className="product-action-btn">
                                                             <ul>
-                                                                <li><a className="add_cart" href="#">Add to cart</a>
+                                                                <li>  <button className="add-to-cart" onClick={() => handleAddToCart(product)}>Thêm vào giỏ hàng</button>
+
                                                                 </li>
 
                                                             </ul>

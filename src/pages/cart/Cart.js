@@ -5,6 +5,7 @@ import Footer from "../Footer";
 import products from "../search/products";
 import {Link} from "react-router-dom";
 import numeral from 'numeral';
+import { useHistory } from 'react-router-dom';
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [cartTotal, setCartTotal] = useState(0);
@@ -59,13 +60,15 @@ const Cart = () => {
             shipping = 200000;
         }else if (total >= 40000001 ) {
             shipping = 250000;
-        } else {
+        }else if (total < 10000000 ) {
+            shipping = 120000;
+        }else {
             shipping = 0;
         }
         setShippingCost(shipping);
         localStorage.setItem('cartTotal', total.toString());
     };
-const cost = shippingCost;
+    const cost = shippingCost;
 
     const updateCartItemQuantity = (productId, quantity) => {
         const updatedCartItems = cartItems.map((item) => {
@@ -90,9 +93,9 @@ const cost = shippingCost;
                     <div className="row">
                         <div className="col-md-12">
                             <ul>
-                                <li><a href="index.html">Home</a> <span><i className="fa fa-angle-right"></i></span>
+                                <li><a href="index.html">Trang chủ</a> <span><i className="fa fa-angle-right"></i></span>
                                 </li>
-                                <li>Cart</li>
+                                <li>Giỏ hàng</li>
                             </ul>
                         </div>
                     </div>
@@ -108,12 +111,12 @@ const cost = shippingCost;
                                 <table className="table-content">
                                     <thead>
                                     <tr>
-                                        <th>teme</th>
-                                        <th>name</th>
-                                        <th>quantity</th>
-                                        <th>price</th>
-                                        <th>total price</th>
-                                        <th>remove</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Tên Sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>giá</th>
+                                        <th>tổng tiền</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
 
@@ -174,7 +177,7 @@ const cost = shippingCost;
                         <div className="col-md-3 col-sm-4 col-xs-12">
                             <div className="update-cart-btn">
                                 <div className="update-cart-btn-inner">
-                                    <Link to="/products"> update cart</Link>
+                                    <Link to="/productlist"> Tiếp tục mua hàng</Link>
 
                                 </div>
                             </div>
@@ -182,12 +185,12 @@ const cost = shippingCost;
                         <div className="col-md-5 col-sm-8 col-xs-12">
                             <div className="offer-coupon">
                                 <div className="offer-titel">
-                                    <h4 className="offer-titel">offer-coupon</h4>
-                                    <p>enter your coupon code if you have one</p>
+                                    <h4 className="offer-titel">ưu đãi-phiếu giảm giá</h4>
+                                    <p>nhập mã phiếu giảm giá của bạn nếu bạn có</p>
                                 </div>
                                 <div className="apply-coupon">
-                                    <input type="text" placeholder="Write Coupon Number here"/>
-                                        <button>apply coupon</button>
+                                    <input type="text" placeholder="Viết số phiếu giảm giá ở đây"/>
+                                        <button>Áp dụng</button>
                                 </div>
                             </div>
                         </div>
@@ -196,14 +199,14 @@ const cost = shippingCost;
                                 <h4>Cart total</h4>
                                 <div className="cart-inner">
                                     <ul>
-                                        <li>Subtotal <span>{numeral(subtotal).format('0,0')}</span></li>
+                                        <li>Tổng sản phẩm <span>{numeral(subtotal).format('0,0')}</span></li>
 
-                                        <li>Shipping cost <span>{numeral(shippingCost).format('0,0')}</span></li>
+                                        <li>Phí giao hàng <span>{numeral(shippingCost).format('0,0')}</span></li>
                                     </ul>
                                 </div>
-                                <p>Total <span>{numeral(cartTotal +cost).format('0,0')}</span></p>
+                                <p>Tổng tiền <span>{numeral(cartTotal +cost).format('0,0')}</span></p>
                                 <div className="proceed-out">
-                                    <a href="#">Proceed to Checkout</a>
+                                    <Link to={{pathname: '/checkout', state: {subtotal: subtotal, shippingCost: shippingCost}}}>Thanh toán</Link>
                                 </div>
                             </div>
                         </div>

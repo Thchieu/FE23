@@ -58,7 +58,7 @@
     37. My account page css here
 
 =======================*/
-@import url('../../../style.css');
+@import url('../../../css');
 
 html, body {height: 100%;}
 .floatleft {float:left}
@@ -2457,7 +2457,7 @@ table tbody tr td {
    35. Home 3 css here
 ----------------------------*/
 .welcome-section {
-    background: rgba(0, 0, 0, 0) url("img/slider/slider-1.jpg") no-repeat scroll center center / cover ;
+    background: rgba(0, 0, 0, 0)  no-repeat scroll center center / cover ;
     height: 700px;
     position: relative;
 }
@@ -2520,7 +2520,7 @@ table tbody tr td {
     z-index: 9;
 }
 .welcome-section.youtube-bg {
-    background: url(img/slider/youtube-bg.png)no-repeat scroll center center / cover;
+    background: no-repeat scroll center center / cover;
 }
 
 /* ------------------------------------
@@ -2642,4 +2642,18 @@ input#rememberme {
     line-height: 35px;
     padding: 0 8px;
     text-transform: uppercase;
+}
+.product-action-btn button{
+    background: #2ba8db none repeat scroll 0 0;
+    border-radius: 5px;
+    color: #ffffff;
+    display: block;
+    font-weight: bold;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 8px;
+    text-transform: uppercase;
+}
+.table-content td {
+    border: 1px solid black;
 }

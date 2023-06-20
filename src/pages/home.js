@@ -41,7 +41,7 @@ class Home extends React.Component {
             const newCartItem = { ...product, quantity: 1 };
             cartItems.push(newCartItem);
         }
-
+alert("Thêm vào giỏ hàng thành công")
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     };
 

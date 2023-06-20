@@ -32,6 +32,7 @@ const ProductList = ({ product, addToCart })  => {
             setCartItems(updatedCartItems);
             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
         }
+        alert("Thêm vào giỏ hàng thành công")
     };
     useEffect(() => {
         const savedCartItems = localStorage.getItem('cartItems');
