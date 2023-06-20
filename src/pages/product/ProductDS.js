@@ -4,6 +4,7 @@ import {useLocation} from "react-router-dom";
 import axios from "axios";
 import Header from "../Header";
 import Footer from "../Footer";
+import numeral from "numeral";
 
 const ProductDS = () => {
     const [products, setProducts] = useState([]);
@@ -33,12 +34,7 @@ const ProductDS = () => {
         fetchCategories();
         fProducts();
     }, []);
-    const formatPrice = (price) => {
-        return price.toLocaleString("vi-VN", {
-            style: "currency",
-            currency: "VND",
-        });
-    };
+
 
     // Hàm xử lý khi người dùng chọn/deselect checkbox danh mục
     const handleCategoryChange = (categoryId) => {
@@ -182,7 +178,7 @@ const ProductDS = () => {
                                                             <div className="price-box">
 
                                                                 <div className="new-price">
-                                                                    <span>{formatPrice(product.price)}</span></div>
+                                                                    <span>{numeral(product.price).format('0,0')}đ</span></div>
                                                             </div>
                                                         </div>
                                                         <div className="product-hover">
@@ -229,7 +225,7 @@ const ProductDS = () => {
                                                         </div>
                                                         <div className="price-box">
 
-                                                            <div className="new-price"><span>{formatPrice(product.price)}</span></div>
+                                                            <div className="new-price"><span>{numeral(product.price).format('0,0')}đ</span></div>
                                                         </div>
                                                         <div className="producut-desc">
                                                             <p>{product.description}</p>

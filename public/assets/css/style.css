@@ -927,6 +927,20 @@ span.new {
 /*-----------------------
 	10.footer css
 -------------------------*/
+.brand-area .brand-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-area .single-brand {
+    margin: 20px;
+}
+
+.brand-area .single-brand img {
+    max-width: 100px;
+}
 .brand-area{
     padding: 100px 0;
 }
@@ -1220,8 +1234,8 @@ span.new {
 .categoryies-option {
     background: #fff none repeat scroll 0 0;
     border: 1px solid #ebebeb;
-    margin-bottom: 34px;
-    padding: 19px 14px;
+    /*margin-bottom: 34px;
+    padding: 19px 14px;*/
 }
 .categoryies-option > h4 {
     color: #1b222a;
@@ -1602,7 +1616,9 @@ span.new {
     color: #1b222a;
 }
 .cont-pd {
-    padding: 28px 14px 26px 20px;
+
+    padding: 20px 15px 20px 15px;
+    border: 1px solid #ddd;
 }
 /*Price filter css here*/
 .price-filter {
@@ -1673,6 +1689,12 @@ span.new {
 }
 .single-product-page-list .owl-controls .owl-buttons .owl-next {
     right:11px;
+}
+.single-zoom-thumb ul li {
+    display: inline-block;
+    margin-right: 5px;
+    width: 85px;
+    height: 71px;
 }
 /*------------------------
    21. related-product-area css

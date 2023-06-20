@@ -4,6 +4,7 @@ import Search from "./search/search";
 import Header from "./Header";
 import Footer from "./Footer";
 import axios from "axios";
+import numeral from "numeral";
 
 class Home extends React.Component {
 
@@ -76,7 +77,7 @@ class Home extends React.Component {
                                 <div className="col-md-6" key={product.id}>
                                     <div className="sigle-banner">
                                         <div className="banner-desc">
-                                            <div className="price"><p>{product.price}đ</p></div>
+                                            <div className="price"><p>{numeral(product.price).format('0,0')}đ</p></div>
                                             <div className="benner-heding">
                                                 <h3>{product.name}</h3>
                                                 <p>{product.description}</p>
@@ -126,7 +127,7 @@ class Home extends React.Component {
                                             </div>
                                             <div className="price-box">
 
-                                                <div className="new-price"><span>{product.price}đ</span></div>
+                                                <div className="new-price"><span>{numeral(product.price).format('0,0')}đ</span></div>
                                             </div>
                                         </div>
                                         <div className="product-hover">
